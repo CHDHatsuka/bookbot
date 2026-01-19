@@ -1,22 +1,19 @@
 import sys
+#keeping stat tracker functions in another file to keep code clean
+from stats import count_words,count_characters,dictionary_to_list
 
-if len(sys.argv) < 2:
-    print("Usage: python3 main.py <path_to_book>")
-    sys.exit(1)
-
+#get the book text
 def get_book_text(filepath):
     with open(filepath) as f:
         text = f.read()
         return text
 
-#keeping stat tracker functions in another file to keep code clean
-from stats import count_words
-
-from stats import count_characters
-
-from stats import dictionary_to_list
-
 def main():
+    #check if the correct usage of this program happened. Need to run it like described.
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
     text = get_book_text(sys.argv[1])
     print(f"============ BOOKBOT ============\nAnalyzing book found at {sys.argv[1]}")
 
@@ -34,10 +31,11 @@ def main():
     # the clean list
     list_of_chs = dictionary_to_list(num_characters)
 
-    for ch in list_of_chs:
-        if ch["char"].isalpha() == True:
-            print(f"{ch["char"]}: " + f"{ch["num"]}")
+    for ch_dict in list_of_chs:
+        if ch_dict["char"].isalpha() == True:
+            print(f"{ch_dict["char"]}: " + f"{ch_dict["num"]}")
         else:
             continue
 
-main()
+if __name__ == "__main__":
+    main()
